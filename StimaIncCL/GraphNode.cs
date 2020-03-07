@@ -9,6 +9,7 @@ namespace StimaIncCL
     public class GraphNode
     {
         private int id;
+        public Boolean visited;
         private string label;
         private int populationCount;
         private int infectedCount;
@@ -18,6 +19,7 @@ namespace StimaIncCL
             this.label = label;
             this.populationCount = populationCount;
             this.infectedCount = infectedCount;
+            this.visited = false;
             Console.WriteLine("GraphNode() => label : " + label + ", populationCount : " + populationCount + ", infectedCount : " + infectedCount);
         }
 

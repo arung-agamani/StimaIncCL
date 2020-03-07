@@ -11,7 +11,7 @@ namespace StimaIncCL
     public class Graph
     {
         public List<GraphNode> nodes;
-        private Queue<GraphNode> bfsQueue;
+        private Queue<GraphNode> bfsQueue, childQueue;
         private StreamReader populationReader, routesReader;
         private string startNode;
         private int graphSize;
@@ -22,6 +22,7 @@ namespace StimaIncCL
             Console.WriteLine("New graph object has been created!");
             this.nodes = new List<GraphNode>();
             this.bfsQueue = new Queue<GraphNode>();
+            this.childQueue = new Queue<GraphNode>();
             populationReader = new StreamReader("../../population.txt");
             // routesReader = new StreamReader("routes.txt");
             /**
@@ -65,7 +66,27 @@ namespace StimaIncCL
         public void searchBFS(int day)
         {
             // Start from startNode
-
+            nodes.Find(n => n.getLabel() == startNode).visited = true;
+            bfsQueue.Enqueue(nodes.Find(n => n.getLabel() == startNode));
+            while (bfsQueue.Count > 0)
+            {
+                // assume always true
+                GraphNode current = bfsQueue.Dequeue();
+                for (int i = 0; i < nodes.Count; i++)
+                {
+                    if (adjMatrix[current.getId(), i] != -99 && !nodes.Find(n => n.getId() == i).visited)
+                    {
+                        nodes.Find(n => n.getId() == i).visited = true;
+                        childQueue.Enqueue(nodes.Find(n => n.getId() == i));
+                    }
+                }
+                
+            }
+            // dequeue child while queue to bfsQueue
+            while (childQueue.Count > 0)
+            {
+                bfsQueue.Enqueue(childQueue.Dequeue());
+            }
         }
 
         public void readRoutes()

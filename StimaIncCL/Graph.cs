@@ -81,7 +81,9 @@ namespace StimaIncCL
                 line = routesReader.ReadLine();
                 firstIdx = (nodes.Find(node => node.getLabel() == (line.Substring(0, 1)))).getId();
                 secondIdx = (nodes.Find(node => node.getLabel() == (line.Substring(2, 1)))).getId();
+                adjMatrix[firstIdx, secondIdx] = float.Parse(line.Substring(4));
 
+                Console.WriteLine($"Matrix index {firstIdx},{secondIdx} has been initiated with value {adjMatrix[firstIdx, secondIdx]}");
                 counter--;
             }
         }

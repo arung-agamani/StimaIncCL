@@ -12,6 +12,8 @@ namespace StimaIncCL
         {
             Graph a = new Graph();
             Console.ReadKey();
+            a.readRoutes();
+            Console.ReadKey();
             a.printGraph();
             Console.ReadKey();
         }

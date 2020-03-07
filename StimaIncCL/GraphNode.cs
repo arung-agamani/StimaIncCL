@@ -12,20 +12,38 @@ namespace StimaIncCL
         private string label;
         private int populationCount;
         private int infectedCount;
+        public static int nodeCount;
 
-        public GraphNode(string label, int populationCount, int infectedCount)
+        public GraphNode(string label, int populationCount, int infectedCount = 0)
         {
             this.label = label;
             this.populationCount = populationCount;
             this.infectedCount = infectedCount;
-            Console.WriteLine("GraphNode() => label : " + label + ", populationCount : " + populationCount + ", infectedCount : " + infectedCount);
+            this.id = nodeCount;
+            nodeCount++;
+            //Console.WriteLine("GraphNode() => label : " + label + ", populationCount : " + populationCount + ", infectedCount : " + infectedCount);
+            if (infectedCount > 0)
+            {
+                Console.WriteLine("GraphNode() => label : " + label + ", populationCount : " + populationCount + ", infectedCount : " + infectedCount);
+            }
+            else
+            {
+                Console.WriteLine("GraphNode() => label : " + label + " and populationCount : " + populationCount);
+            }
         }
 
-        public GraphNode(string label, int populationCount)
+        /*public GraphNode(string label, int populationCount)
         {
             this.label = label;
             this.populationCount = populationCount;
+            this.id = nodeCount;
+            nodeCount++;
             Console.WriteLine("GraphNode() => label : " + label + " and populationCount : " + populationCount);
+        }*/
+
+        static GraphNode()
+        {
+            nodeCount = 0;
         }
 
         public string getLabel()

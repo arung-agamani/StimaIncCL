@@ -87,5 +87,18 @@ namespace StimaIncCL
                 counter--;
             }
         }
+
+        public static float logisticsFunc(GraphNode a, int ta)
+        {
+            float numerator = (float)a.getPopulationCount();
+            float denominator = 1 + (a.getPopulationCount() - 1) * Math.Pow(Math.E, ta * (-0.25));
+            return numerator / denominator;
+        }
+
+        public static bool infectionFunc(GraphNode a, GraphNode b, float tr)
+        {
+            float check = Graph.logisticsFunc(a, a.gett()) * tr;
+            return check > 1;
+        }
     }
 }

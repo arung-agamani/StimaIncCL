@@ -29,6 +29,8 @@ namespace StimaIncCL
                 Console.WriteLine("IF ANJING KONTOL BABI MONYET MADESU MEMEK BANGSAT.\nGUA PENGEN TIDUR BANGSAT, GUA PENGEN COLI, GUA PENGEN COLI, GUA PENGEN COLI, GUA PEN MAIN, GUA MAU COLI\nAAAAAAAAAA CROTTTTTTTTTTT");
             }
             Console.ReadKey();
+            // Graph.searchBFS(a.nodes.Find(x => x.getLabel() == a.startNode), 3, a.nodes, a.bfsQueue, a.childQueue, a.adjMatrix);
+            Console.ReadKey();
         }
     }
 }

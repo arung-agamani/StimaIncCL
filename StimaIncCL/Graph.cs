@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Globalization;
 
 
 namespace StimaIncCL
@@ -11,11 +12,11 @@ namespace StimaIncCL
     public class Graph
     {
         public List<GraphNode> nodes;
-        private Queue<GraphNode> bfsQueue, childQueue;
-        private StreamReader populationReader, routesReader;
-        private string startNode;
+        public Queue<GraphNode> bfsQueue, childQueue;
+        public StreamReader populationReader, routesReader;
+        public string startNode;
         private int graphSize;
-        private float[,] adjMatrix;
+        public float[,] adjMatrix;
 
         public Graph()
         {
@@ -73,34 +74,19 @@ namespace StimaIncCL
             }
         }
 
-        public void searchBFS(int day)
+        public void searchBFS(int days)
         {
-            // Start from startNode
-            nodes.Find(n => n.getLabel() == startNode).visited = true;
-            bfsQueue.Enqueue(nodes.Find(n => n.getLabel() == startNode));
+            bfsQueue.Enqueue(nodes.Find(x => x.getLabel() == startNode)); // Initial push
             while (bfsQueue.Count > 0)
             {
                 GraphNode current = bfsQueue.Dequeue();
-                for (int i = 0; i < nodes.Count; i++)
+                for (int i = 0; i < graphSize; i++)
                 {
-                    if (adjMatrix[current.getId(), i] != -99 && !nodes.Find(n => n.getId() == i).visited && infectionFunc(current, nodes.Find(n => n.getId() == i), adjMatrix[current.getId(), i]))
+                    if (getMatrixAt(current.getId(), i) != 0 && infectionFunc(current, nodes.Find(x => x.getId() == i), getMatrixAt(current.getId(), i)))
                     {
-                        nodes.Find(n => n.getId() == i).visited = true;
-                        childQueue.Enqueue(nodes.Find(n => n.getId() == i));
+                        // buat fungsi kapan tersebar
+                        // 
                     }
-                }
-                
-            }
-            // dequeue child while queue to bfsQueue
-            while (childQueue.Count > 0)
-            {
-                bfsQueue.Enqueue(childQueue.Dequeue());
-            }
-            foreach (var node in nodes)
-            {
-                if (node.visited)
-                {
-                    Console.WriteLine("Infection has entered " + node.getLabel() + " city.");
                 }
             }
         }
@@ -118,7 +104,7 @@ namespace StimaIncCL
                 line = routesReader.ReadLine();
                 firstIdx = (nodes.Find(node => node.getLabel() == (line.Substring(0, 1)))).getId();
                 secondIdx = (nodes.Find(node => node.getLabel() == (line.Substring(2, 1)))).getId();
-                adjMatrix[firstIdx, secondIdx] = float.Parse(line.Substring(4));
+                adjMatrix[firstIdx, secondIdx] = float.Parse(line.Substring(4), CultureInfo.InvariantCulture);
 
                 Console.WriteLine($"Matrix index {firstIdx},{secondIdx} has been initiated with value {adjMatrix[firstIdx, secondIdx]}");
                 counter--;

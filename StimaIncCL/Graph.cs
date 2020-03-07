@@ -46,6 +46,16 @@ namespace StimaIncCL
             }
         }
 
+        public float getMatrixAt(int row, int column)
+        {
+            return adjMatrix[row, column];
+        }
+
+        public GraphNode getNodeWithLabel (string lab)
+        {
+            return nodes.Find(x => x.getLabel() == lab);
+        }
+
         public void printGraph()
         {
             Console.WriteLine("Printing graph content...");
@@ -115,16 +125,20 @@ namespace StimaIncCL
             }
         }
 
+        /* int ta = t(A) yang ada di spek tubes gayn */
         public static float logisticsFunc(GraphNode a, int ta)
         {
             float numerator = (float)a.getPopulationCount();
-            float denominator = (float)(1 + (a.getPopulationCount() - 1) * Math.Pow(Math.E, ta * (-0.25)));
-            return numerator / denominator;
+            float denominator = (float)(1 + (a.getPopulationCount() - 1) * (Math.Pow(Math.E, ta * (-0.25))));
+            return (numerator / denominator);
         }
 
+        /* Untuk ngecek apakah node b berhasil diinfeksi node a, misal ada instance Graph g, 
+           gunakan Graph.infectionFunc(a, b, g.getMatrixAt(A.getId(), B.getId())) 
+           Also ubah 4 dalam fungsi ini jadi a.gett()*/
         public static bool infectionFunc(GraphNode a, GraphNode b, float tr)
         {
-            float check = Graph.logisticsFunc(a, a.gett()) * tr;
+            float check = Graph.logisticsFunc(a, 4) * tr;
             return check > 1;
         }
     }

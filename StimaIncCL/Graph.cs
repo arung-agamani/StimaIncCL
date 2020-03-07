@@ -14,8 +14,7 @@ namespace StimaIncCL
         private StreamReader populationReader, routesReader;
         private string startNode;
         private int graphSize;
-        private int[,] adjMatrix;
-        private float[,] trMatrix;
+        private float[,] adjMatrix;
 
         public Graph()
         {
@@ -50,6 +49,24 @@ namespace StimaIncCL
             foreach (var node in nodes)
             {
                 Console.WriteLine("Node label : " + node.getLabel() + ", populationCount : " + node.getPopulationCount());
+            }
+        }
+
+        public void readRoutes()
+        {
+            routesReader = new StreamReader("../../routes.txt");
+            string line;
+            int counter, firstIdx, secondIdx;
+            counter = Convert.ToInt32(routesReader.ReadLine());
+            Console.WriteLine($"There are {counter} infection routes");
+
+            while (counter > 0)
+            {
+                line = routesReader.ReadLine();
+                firstIdx = (nodes.Find(node => node.getLabel() == (line.Substring(0, 1)))).getId();
+                secondIdx = (nodes.Find(node => node.getLabel() == (line.Substring(2, 1)))).getId();
+
+                counter--;
             }
         }
     }

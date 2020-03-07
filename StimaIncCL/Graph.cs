@@ -70,11 +70,10 @@ namespace StimaIncCL
             bfsQueue.Enqueue(nodes.Find(n => n.getLabel() == startNode));
             while (bfsQueue.Count > 0)
             {
-                // assume always true
                 GraphNode current = bfsQueue.Dequeue();
                 for (int i = 0; i < nodes.Count; i++)
                 {
-                    if (adjMatrix[current.getId(), i] != -99 && !nodes.Find(n => n.getId() == i).visited)
+                    if (adjMatrix[current.getId(), i] != -99 && !nodes.Find(n => n.getId() == i).visited && infectionFunc(current, nodes.Find(n => n.getId() == i), adjMatrix[current.getId(), i]))
                     {
                         nodes.Find(n => n.getId() == i).visited = true;
                         childQueue.Enqueue(nodes.Find(n => n.getId() == i));
@@ -86,6 +85,13 @@ namespace StimaIncCL
             while (childQueue.Count > 0)
             {
                 bfsQueue.Enqueue(childQueue.Dequeue());
+            }
+            foreach (var node in nodes)
+            {
+                if (node.visited)
+                {
+                    Console.WriteLine("Infection has entered " + node.getLabel() + " city.");
+                }
             }
         }
 
@@ -112,7 +118,7 @@ namespace StimaIncCL
         public static float logisticsFunc(GraphNode a, int ta)
         {
             float numerator = (float)a.getPopulationCount();
-            float denominator = 1 + (a.getPopulationCount() - 1) * Math.Pow(Math.E, ta * (-0.25));
+            float denominator = (float)(1 + (a.getPopulationCount() - 1) * Math.Pow(Math.E, ta * (-0.25)));
             return numerator / denominator;
         }
 

@@ -102,9 +102,24 @@ namespace StimaIncCL
                 line = routesReader.ReadLine();
                 firstIdx = (nodes.Find(node => node.getLabel() == (line.Substring(0, 1)))).getId();
                 secondIdx = (nodes.Find(node => node.getLabel() == (line.Substring(2, 1)))).getId();
+                adjMatrix[firstIdx, secondIdx] = float.Parse(line.Substring(4));
 
+                Console.WriteLine($"Matrix index {firstIdx},{secondIdx} has been initiated with value {adjMatrix[firstIdx, secondIdx]}");
                 counter--;
             }
+        }
+
+        public static float logisticsFunc(GraphNode a, int ta)
+        {
+            float numerator = (float)a.getPopulationCount();
+            float denominator = 1 + (a.getPopulationCount() - 1) * Math.Pow(Math.E, ta * (-0.25));
+            return numerator / denominator;
+        }
+
+        public static bool infectionFunc(GraphNode a, GraphNode b, float tr)
+        {
+            float check = Graph.logisticsFunc(a, a.gett()) * tr;
+            return check > 1;
         }
     }
 }

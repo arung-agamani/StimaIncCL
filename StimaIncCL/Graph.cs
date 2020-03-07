@@ -11,6 +11,7 @@ namespace StimaIncCL
     public class Graph
     {
         public List<GraphNode> nodes;
+        private Queue<GraphNode> bfsQueue;
         private StreamReader populationReader, routesReader;
         private string startNode;
         private int graphSize;
@@ -20,6 +21,7 @@ namespace StimaIncCL
         {
             Console.WriteLine("New graph object has been created!");
             this.nodes = new List<GraphNode>();
+            this.bfsQueue = new Queue<GraphNode>();
             populationReader = new StreamReader("../../population.txt");
             // routesReader = new StreamReader("routes.txt");
             /**
@@ -49,6 +51,24 @@ namespace StimaIncCL
             foreach (var node in nodes)
             {
                 Console.WriteLine("Node label : " + node.getLabel() + ", populationCount : " + node.getPopulationCount());
+                // Print node's relation
+                for (int i = 0; i < nodes.Count; i++)
+                {
+                    if (adjMatrix[node.getId(),i] != -99)
+                    {
+                        Console.WriteLine(node.getLabel() + " relates with id " + nodes.Find(n => n.getId() == i).getLabel() + " with Tr: " + adjMatrix[node.getId(), i]);
+                    }
+                }
+            }
+        }
+
+        public void searchBFS(int day)
+        {
+            // Start from startNode
+
+        }
+    }
+}
             }
         }
 

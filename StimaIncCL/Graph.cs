@@ -34,7 +34,7 @@ namespace StimaIncCL
             string line;
             line = populationReader.ReadLine();
             graphSize = Convert.ToInt32(line.Substring(0, 1));
-            adjMatrix = new int[graphSize, graphSize];
+            adjMatrix = new float[graphSize, graphSize];
             startNode = line.Substring(2);
             Console.WriteLine("Graph size is " + graphSize);
             Console.WriteLine("Starting node : " + startNode);
@@ -66,10 +66,6 @@ namespace StimaIncCL
         {
             // Start from startNode
 
-        }
-    }
-}
-            }
         }
 
         public void readRoutes()

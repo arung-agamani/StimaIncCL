@@ -8,6 +8,7 @@ namespace StimaIncCL
 {
     public class GraphNode
     {
+        private int id;
         private string label;
         private int populationCount;
         private int infectedCount;
@@ -40,6 +41,11 @@ namespace StimaIncCL
         public int getInfectedCount()
         {
             return this.infectedCount;
+        }
+
+        public int getId()
+        {
+            return this.id;
         }
     }
 }

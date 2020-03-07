@@ -9,6 +9,7 @@ namespace StimaIncCL
     public class GraphNode
     {
         private int id;
+        public Boolean visited;
         private string label;
         private int populationCount;
         private int infectedCount;

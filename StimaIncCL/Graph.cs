@@ -12,7 +12,7 @@ namespace StimaIncCL
     public class Graph
     {
         public List<GraphNode> nodes;
-        public Queue<GraphNode> bfsQueue, childQueue;
+        public Queue<GraphNode> bfsQueue;
         public StreamReader populationReader, routesReader;
         public string startNode;
         private int graphSize;
@@ -23,7 +23,6 @@ namespace StimaIncCL
             Console.WriteLine("New graph object has been created!");
             this.nodes = new List<GraphNode>();
             this.bfsQueue = new Queue<GraphNode>();
-            this.childQueue = new Queue<GraphNode>();
             populationReader = new StreamReader("../../population.txt");
             // routesReader = new StreamReader("routes.txt");
             /**
@@ -78,6 +77,7 @@ namespace StimaIncCL
 
         public void searchBFS(int days)
         {
+            Queue<string> infectionRoute = new Queue<string>();
             bfsQueue.Enqueue(nodes.Find(x => x.getLabel() == startNode)); // Initial push
             while (bfsQueue.Count > 0)
             {
@@ -88,9 +88,7 @@ namespace StimaIncCL
                 {
                     //Console.WriteLine("I'm here");
                     if ((nodes.Find(node => node.getId() == i)).infected == false && infectionFunc(current, getMatrixAt(current.getId(), i), days))
-                    {
-                        // buat fungsi kapan tersebar
-                        //
+                    {        
                         //Console.WriteLine("I got here");
                         string end = (nodes.Find(node => node.getId() == i)).getLabel();
                         Console.WriteLine($"Town {start}'s virus spread to Town {end}!");
@@ -99,8 +97,25 @@ namespace StimaIncCL
                         int dayInfected = (nodes.Find(node => node.getId() == i)).getTimeInfected();
                         Console.WriteLine($"Day Infected : Day {dayInfected}");
                         bfsQueue.Enqueue(nodes.Find(node => node.getId() == i));
+                        infectionRoute.Enqueue($"{start} -> {end}");
                     }
                 }
+            }
+            if (infectionRoute.Count > 0)
+            {
+                string temp;
+                Console.WriteLine("Infection Route :");
+                while (infectionRoute.Count > 1)
+                {
+                    temp = infectionRoute.Dequeue();
+                    Console.Write($"{temp}, ");
+                }
+                temp = infectionRoute.Dequeue();
+                Console.WriteLine(temp);
+            }
+            else 
+            {
+                Console.WriteLine("The virus did not spread");
             }
             Console.WriteLine("Simulation Finished");
         }

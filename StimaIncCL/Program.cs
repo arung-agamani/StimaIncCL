@@ -20,6 +20,7 @@ namespace StimaIncCL
             int days = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Starting simulation...");
             a.searchBFS(days);
+            Console.WriteLine("Simulation Finished");
             Console.ReadKey();
         }
     }

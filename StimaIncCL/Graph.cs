@@ -117,7 +117,6 @@ namespace StimaIncCL
             {
                 Console.WriteLine("The virus did not spread");
             }
-            Console.WriteLine("Simulation Finished");
         }
 
         public void readRoutes()
@@ -140,7 +139,7 @@ namespace StimaIncCL
             }
         }
 
-        /* int ta = t(A) yang ada di spek tubes gayn */
+        /* int ta = t(A), yaitu total hari simulasi - hari pertama virus tersebar di A */
         public static float logisticsFunc(GraphNode a, int ta)
         {
             float numerator = (float)a.getPopulationCount();
@@ -158,6 +157,8 @@ namespace StimaIncCL
             return check > 1;
         }
 
+        /* Menghitung pada hari keberapa virus tersebar dari kota a ke kota b,
+         * tr merupakan peluang seseorang berpergian dari kota a ke kota b (isi dari adjMatriks) */
         public static int calcInfectionTime(GraphNode a, float tr)
         {
             float check = (1 / tr);

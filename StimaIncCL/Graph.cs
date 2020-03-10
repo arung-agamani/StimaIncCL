@@ -45,6 +45,8 @@ namespace StimaIncCL
                 line = populationReader.ReadLine();
                 nodes.Add(new GraphNode(line.Substring(0, 1), Convert.ToInt32(line.Substring(2))));
             }
+            (nodes.Find(node => node.getLabel() == startNode)).infected = true;
+            (nodes.Find(node => node.getLabel() == startNode)).setTimeInfected(0);
         }
 
         public float getMatrixAt(int row, int column)
@@ -80,15 +82,27 @@ namespace StimaIncCL
             while (bfsQueue.Count > 0)
             {
                 GraphNode current = bfsQueue.Dequeue();
+                string start = current.getLabel();
+                Console.WriteLine($"Evaluating Town {start}");
                 for (int i = 0; i < graphSize; i++)
                 {
-                    if (getMatrixAt(current.getId(), i) != 0 && infectionFunc(current, nodes.Find(x => x.getId() == i), getMatrixAt(current.getId(), i)))
+                    //Console.WriteLine("I'm here");
+                    if ((nodes.Find(node => node.getId() == i)).infected == false && infectionFunc(current, getMatrixAt(current.getId(), i), days))
                     {
                         // buat fungsi kapan tersebar
-                        // 
+                        //
+                        //Console.WriteLine("I got here");
+                        string end = (nodes.Find(node => node.getId() == i)).getLabel();
+                        Console.WriteLine($"Town {start}'s virus spread to Town {end}!");
+                        (nodes.Find(node => node.getId() == i)).infected = true;
+                        (nodes.Find(node => node.getId() == i)).setTimeInfected(calcInfectionTime(current, getMatrixAt(current.getId(), i)));
+                        int dayInfected = (nodes.Find(node => node.getId() == i)).getTimeInfected();
+                        Console.WriteLine($"Day Infected : Day {dayInfected}");
+                        bfsQueue.Enqueue(nodes.Find(node => node.getId() == i));
                     }
                 }
             }
+            Console.WriteLine("Simulation Finished");
         }
 
         public void readRoutes()
@@ -120,12 +134,26 @@ namespace StimaIncCL
         }
 
         /* Untuk ngecek apakah node b berhasil diinfeksi node a, misal ada instance Graph g, 
-           gunakan Graph.infectionFunc(a, b, g.getMatrixAt(A.getId(), B.getId())) 
-           Also ubah 4 dalam fungsi ini jadi a.gett()*/
-        public static bool infectionFunc(GraphNode a, GraphNode b, float tr)
+           gunakan Graph.infectionFunc(a, g.getMatrixAt(a.getId(), b.getId()), T) dengan T
+           adalah input interval hari yang didapat dari input user
+        */
+        public static bool infectionFunc(GraphNode a, float tr, int T)
         {
-            float check = Graph.logisticsFunc(a, 4) * tr;
+            float check = Graph.logisticsFunc(a, T - a.getTimeInfected()) * tr;
             return check > 1;
+        }
+
+        public static int calcInfectionTime(GraphNode a, float tr)
+        {
+            float check = (1 / tr);
+            // Big risk of infinite loop
+            int counter = 0;
+            while (logisticsFunc(a, counter) <= check)
+            {
+                counter++;
+            }
+
+            return a.getTimeInfected() + counter;
         }
     }
 }

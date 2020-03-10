@@ -16,20 +16,10 @@ namespace StimaIncCL
             Console.ReadKey();
             a.printGraph();
             Console.ReadKey();
-            float fuckYou = Graph.logisticsFunc(a.getNodeWithLabel("A"), 4);
-            Console.WriteLine(fuckYou);
-            Console.ReadKey();
-            bool test = Graph.infectionFunc(a.getNodeWithLabel("A"), a.getNodeWithLabel("B"), a.getMatrixAt(0, 1));
-            if (test)
-            {
-                Console.WriteLine("Node B has been infected by Node A");
-            }
-            else
-            {
-                Console.WriteLine("IF ANJING KONTOL BABI MONYET MADESU MEMEK BANGSAT.\nGUA PENGEN TIDUR BANGSAT, GUA PENGEN COLI, GUA PENGEN COLI, GUA PENGEN COLI, GUA PEN MAIN, GUA MAU COLI\nAAAAAAAAAA CROTTTTTTTTTTT");
-            }
-            Console.ReadKey();
-            // Graph.searchBFS(a.nodes.Find(x => x.getLabel() == a.startNode), 3, a.nodes, a.bfsQueue, a.childQueue, a.adjMatrix);
+            Console.Write("Masukkan jumlah hari simulasi : ");
+            int days = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Starting simulation...");
+            a.searchBFS(days);
             Console.ReadKey();
         }
     }

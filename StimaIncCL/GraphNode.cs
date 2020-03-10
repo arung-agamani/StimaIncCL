@@ -9,17 +9,19 @@ namespace StimaIncCL
     public class GraphNode
     {
         private int id;
-        public Boolean visited;
+        public bool infected;
         private string label;
         private int populationCount;
         private int infectedCount;
+        private int timeInfected;
         public static int nodeCount;
 
-        public GraphNode(string label, int populationCount, int infectedCount = 0)
+        public GraphNode(string label, int populationCount, int infectedCount = 0, bool infected = false)
         {
             this.label = label;
             this.populationCount = populationCount;
             this.infectedCount = infectedCount;
+            this.infected = infected;
             this.id = nodeCount;
             nodeCount++;
             //Console.WriteLine("GraphNode() => label : " + label + ", populationCount : " + populationCount + ", infectedCount : " + infectedCount);
@@ -65,6 +67,16 @@ namespace StimaIncCL
         public int getId()
         {
             return this.id;
+        }
+
+        public int getTimeInfected()
+        {
+            return this.timeInfected;
+        }
+
+        public void setTimeInfected(int time)
+        {
+            this.timeInfected = time;
         }
     }
 }
